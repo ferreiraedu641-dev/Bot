@@ -301,149 +301,177 @@ embed.add_field(name="📌 Instruções", value="Após o pagamento, envie o comp
 embed.set_footer(text="Obrigado por jogar conosco!")  
 await ctx.send(embed=embed)
 
-#----------------------------------------------------------
+# ----------------------------------------------------------
+# COMANDO !pagamento
+# ----------------------------------------------------------
 
-#COMANDOS DE CONFIGURAÇÃO
+@bot.command(name="pagamento")
+@commands.has_permissions(administrator=True)
+async def pagamento(ctx):
+    """Envia o embed com QR Code e instruções de pagamento."""
+    if not config["qr_code"]:
+        embed = embed_base(
+            "❌ QR Code não configurado",
+            "Use !setqr <url> para definir a imagem do QR Code.",
+            discord.Color.red()
+        )
+        return await ctx.send(embed=embed)
 
-#----------------------------------------------------------
+    embed = discord.Embed(
+        title="💰 PAGAMENTO",
+        description="Escaneie o QR Code abaixo para realizar o pagamento.",
+        color=discord.Color.gold()
+    )
+    embed.set_image(url=config["qr_code"])
+    embed.add_field(
+        name="📌 Instruções",
+        value="Após o pagamento, envie o comprovante para um administrador.",
+        inline=False
+    )
+    embed.set_footer(text="Obrigado por jogar conosco!")
+    await ctx.send(embed=embed)
+
+
+# ----------------------------------------------------------
+# COMANDOS DE CONFIGURAÇÃO
+# ----------------------------------------------------------
 
 @bot.command(name="setlogo")
 @commands.has_permissions(administrator=True)
 async def setlogo(ctx, url: str):
-config["logo"] = url
-await ctx.send(embed=embed_base("✅ Logo atualizada", f"Thumbnail definida: {url}", discord.Color.green()))
+    config["logo"] = url
+    await ctx.send(embed=embed_base("✅ Logo atualizada", f"Thumbnail definida: {url}", discord.Color.green()))
+
 
 @bot.command(name="setbanner")
 @commands.has_permissions(administrator=True)
 async def setbanner(ctx, url: str):
-config["banner"] = url
-await ctx.send(embed=embed_base("✅ Banner atualizado", f"Imagem principal definida: {url}", discord.Color.green()))
+    config["banner"] = url
+    await ctx.send(embed=embed_base("✅ Banner atualizado", f"Imagem principal definida: {url}", discord.Color.green()))
+
 
 @bot.command(name="setcanal")
 @commands.has_permissions(administrator=True)
 async def setcanal(ctx, canal: discord.TextChannel):
-config["canal_apostado"] = str(canal.id)
-await ctx.send(embed=embed_base("✅ Canal definido", f"Comando !apostado liberado apenas em {canal.mention}", discord.Color.green()))
+    config["canal_apostado"] = str(canal.id)
+    await ctx.send(embed=embed_base("✅ Canal definido", f"Comando !apostado liberado apenas em {canal.mention}", discord.Color.green()))
+
 
 @bot.command(name="setcategoria")
 @commands.has_permissions(administrator=True)
 async def setcategoria(ctx, *, nome: str):
-config["categoria_salas"] = nome
-await ctx.send(embed=embed_base("✅ Categoria definida", f"As salas serão criadas na categoria {nome}", discord.Color.green()))
+    config["categoria_salas"] = nome
+    await ctx.send(embed=embed_base("✅ Categoria definida", f"As salas serão criadas na categoria {nome}", discord.Color.green()))
+
 
 @bot.command(name="setlogs")
 @commands.has_permissions(administrator=True)
 async def setlogs(ctx, canal: discord.TextChannel):
-config["canal_logs"] = str(canal.id)
-await ctx.send(embed=embed_base("✅ Canal de logs", f"Logs serão enviados para {canal.mention}", discord.Color.green()))
+    config["canal_logs"] = str(canal.id)
+    await ctx.send(embed=embed_base("✅ Canal de logs", f"Logs serão enviados para {canal.mention}", discord.Color.green()))
+
 
 @bot.command(name="setqr")
 @commands.has_permissions(administrator=True)
 async def setqr(ctx, url: str):
-config["qr_code"] = url
-await ctx.send(embed=embed_base("✅ QR Code definido", "Imagem do pagamento configurada.", discord.Color.green()))
+    config["qr_code"] = url
+    await ctx.send(embed=embed_base("✅ QR Code definido", "Imagem do pagamento configurada.", discord.Color.green()))
+
 
 @bot.command(name="configurar")
 @commands.has_permissions(administrator=True)
 async def configurar(ctx):
-"""Exibe todas as configurações atuais."""
-embed = discord.Embed(title="⚙️ Configurações atuais", color=discord.Color.gold())
-embed.add_field(name="Logo", value=config["logo"] or "Não definida", inline=False)
-embed.add_field(name="Banner", value=config["banner"] or "Não definido", inline=False)
-embed.add_field(name="Canal Apostado", value=f"<#{config['canal_apostado']}>" if config["canal_apostado"] else "Todos", inline=True)
-embed.add_field(name="Categoria Salas", value=config["categoria_salas"] or "Nenhuma (raiz)", inline=True)
-embed.add_field(name="Canal Logs", value=f"<#{config['canal_logs']}>" if config["canal_logs"] else "Nenhum", inline=True)
-embed.add_field(name="QR Code", value="Configurado" if config["qr_code"] else "Não configurado", inline=True)
-embed.add_field(name="Anti-Spam", value=f"<#{config['canal_antispam']}>" if config["canal_antispam"] else "Desativado", inline=True)
-await ctx.send(embed=embed)
+    """Exibe todas as configurações atuais."""
+    embed = discord.Embed(title="⚙️ Configurações atuais", color=discord.Color.gold())
+    embed.add_field(name="Logo", value=config["logo"] or "Não definida", inline=False)
+    embed.add_field(name="Banner", value=config["banner"] or "Não definido", inline=False)
+    embed.add_field(name="Canal Apostado", value=f"<#{config['canal_apostado']}>" if config["canal_apostado"] else "Todos", inline=True)
+    embed.add_field(name="Categoria Salas", value=config["categoria_salas"] or "Nenhuma (raiz)", inline=True)
+    embed.add_field(name="Canal Logs", value=f"<#{config['canal_logs']}>" if config["canal_logs"] else "Nenhum", inline=True)
+    embed.add_field(name="QR Code", value="Configurado" if config["qr_code"] else "Não configurado", inline=True)
+    embed.add_field(name="Anti-Spam", value=f"<#{config['canal_antispam']}>" if config["canal_antispam"] else "Desativado", inline=True)
+    await ctx.send(embed=embed)
 
-#----------------------------------------------------------
 
-#COMANDO ANTI-SPAM
-
-#----------------------------------------------------------
+# ----------------------------------------------------------
+# COMANDO ANTI-SPAM
+# ----------------------------------------------------------
 
 @bot.command(name="setantispam")
 @commands.has_permissions(administrator=True)
 async def setantispam(ctx, canal: discord.TextChannel):
-config["canal_antispam"] = str(canal.id)
-await ctx.send(embed=embed_base("🛡️ Anti-Spam ativado", f"Mensagens repetidas serão filtradas em {canal.mention}", discord.Color.yellow()))
+    config["canal_antispam"] = str(canal.id)
+    await ctx.send(embed=embed_base("🛡️ Anti-Spam ativado", f"Mensagens repetidas serão filtradas em {canal.mention}", discord.Color.yellow()))
 
-#============================================================
 
-#EVENTO ON_MESSAGE (ANTI-SPAM)
-
-#============================================================
+# ============================================================
+# EVENTO ON_MESSAGE (ANTI-SPAM)
+# ============================================================
 
 @bot.event
 async def on_message(message: discord.Message):
-# Não processar mensagens do próprio bot
-if message.author.bot:
-return
+    if message.author.bot:
+        return
 
-# Anti-spam apenas se o canal estiver configurado e for o canal certo  
-if config["canal_antispam"] and str(message.channel.id) == config["canal_antispam"]:  
-    # Ignorar administradores  
-    if message.author.guild_permissions.administrator:  
-        await bot.process_commands(message)  # importante para comandos funcionarem  
-        return  
+    if config["canal_antispam"] and str(message.channel.id) == config["canal_antispam"]:
+        if message.author.guild_permissions.administrator:
+            await bot.process_commands(message)
+            return
 
-    # Chave para rastrear  
-    chave = (message.guild.id, message.author.id, message.channel.id)  
-    historico = spam_tracker.setdefault(chave, [])  
-    conteudo = message.content  
+        chave = (message.guild.id, message.author.id, message.channel.id)
+        historico = spam_tracker.setdefault(chave, [])
+        conteudo = message.content
 
-    # Adiciona o conteúdo atual ao histórico  
-    historico.append(conteudo)  
-    # Mantém apenas as últimas 3  
-    if len(historico) > 3:  
-        historico.pop(0)  
+        historico.append(conteudo)
+        if len(historico) > 3:
+            historico.pop(0)
 
-    # Verifica se as três últimas são idênticas  
-    if len(historico) == 3 and historico[0] == historico[1] == historico[2]:  
-        try:  
-            await message.delete()  
-        except discord.Forbidden:  
-            pass  
-        # Aviso em embed (não ephemeral porque é mensagem comum)  
-        embed = embed_base(  
-            "⚠️ Aviso de Spam",  
-            f"{message.author.mention}, você enviou a mesma mensagem 3 vezes seguidas. Evite spam!",  
-            discord.Color.orange()  
-        )  
-        aviso = await message.channel.send(embed=embed)  
-        await asyncio.sleep(5)  
-        try:  
-            await aviso.delete()  
-        except:  
-            pass  
-        # Limpa o histórico para evitar múltiplos avisos seguidos  
-        historico.clear()  
-        # Log  
-        await enviar_log(message.guild, f"🚫 Spam detectado de {message.author.mention} no canal {message.channel.mention}", discord.Color.red())  
+        if len(historico) == 3 and historico[0] == historico[1] == historico[2]:
+            try:
+                await message.delete()
+            except discord.Forbidden:
+                pass
 
-# Permitir processamento de comandos  
-await bot.process_commands(message)
+            embed = embed_base(
+                "⚠️ Aviso de Spam",
+                f"{message.author.mention}, você enviou a mesma mensagem 3 vezes seguidas. Evite spam!",
+                discord.Color.orange()
+            )
+            aviso = await message.channel.send(embed=embed)
+            await asyncio.sleep(5)
 
-#============================================================
+            try:
+                await aviso.delete()
+            except:
+                pass
 
-#EVENTO ON_READY
+            historico.clear()
 
-#============================================================
+            await enviar_log(
+                message.guild,
+                f"🚫 Spam detectado de {message.author.mention} no canal {message.channel.mention}",
+                discord.Color.red()
+            )
+
+    await bot.process_commands(message)
+
+
+# ============================================================
+# EVENTO ON_READY
+# ============================================================
 
 @bot.event
 async def on_ready():
-print(f"✅ Bot online como {bot.user}")
-print("Sistema de apostados profissional pronto!")
+    print(f"✅ Bot online como {bot.user}")
+    print("Sistema de apostados profissional pronto!")
 
-#============================================================
 
-#EXECUÇÃO SEGURA
-
-#============================================================
+# ============================================================
+# EXECUÇÃO SEGURA
+# ============================================================
 
 TOKEN = os.getenv("TOKEN")
 if TOKEN is None:
-raise ValueError("A variável de ambiente 'TOKEN' não foi definida. Defina-a antes de executar.")
+    raise ValueError("A variável de ambiente 'TOKEN' não foi definida.")
 
 bot.run(TOKEN)
