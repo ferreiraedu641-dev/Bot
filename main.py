@@ -329,7 +329,7 @@ async def setbanner(ctx, url: str):
     await ctx.send(embed=embed_base("✅ Banner atualizado", f"Imagem principal definida: {url}", discord.Color.green()))
 
 
-@bot.command(name="setcanal")
+@bot.command(name="canal")
 @commands.has_permissions(administrator=True)
 async def setcanal(ctx, canal: discord.TextChannel):
     config["canal_apostado"] = str(canal.id)
@@ -343,14 +343,14 @@ async def setcategoria(ctx, *, nome: str):
     await ctx.send(embed=embed_base("✅ Categoria definida", f"As salas serão criadas na categoria {nome}", discord.Color.green()))
 
 
-@bot.command(name="setlogs")
+@bot.command(name="logs")
 @commands.has_permissions(administrator=True)
 async def setlogs(ctx, canal: discord.TextChannel):
     config["canal_logs"] = str(canal.id)
     await ctx.send(embed=embed_base("✅ Canal de logs", f"Logs serão enviados para {canal.mention}", discord.Color.green()))
 
 
-@bot.command(name="setqr")
+@bot.command(name="qr")
 @commands.has_permissions(administrator=True)
 async def setqr(ctx, url: str):
     config["qr_code"] = url
@@ -405,14 +405,14 @@ async def pagamento(ctx):
 # COMANDOS DE CONFIGURAÇÃO
 # ----------------------------------------------------------
 
-@bot.command(name="setlogo")
+@bot.command(name="logo")
 @commands.has_permissions(administrator=True)
 async def setlogo(ctx, url: str):
     config["logo"] = url
     await ctx.send(embed=embed_base("✅ Logo atualizada", f"Thumbnail definida: {url}", discord.Color.green()))
 
 
-@bot.command(name="setbanner")
+@bot.command(name="banner")
 @commands.has_permissions(administrator=True)
 async def setbanner(ctx, url: str):
     config["banner"] = url
@@ -440,7 +440,7 @@ async def setlogs(ctx, canal: discord.TextChannel):
     await ctx.send(embed=embed_base("✅ Canal de logs", f"Logs serão enviados para {canal.mention}", discord.Color.green()))
 
 
-@bot.command(name="setqr")
+@bot.command(name="qr")
 @commands.has_permissions(administrator=True)
 async def setqr(ctx, url: str):
     config["qr_code"] = url
