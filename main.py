@@ -39,7 +39,7 @@ ESTRUTURAS PARA CONTROLE DE PARTIDAS E ANTI-SPAM
 
 ============================================================
 
-Chave: (guild_id, message_id) → View ativa
+#Chave: (guild_id, message_id) → View ativa
 
 active_views: Dict[tuple, 'ApostadoView'] = {}
 
