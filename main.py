@@ -76,15 +76,15 @@ def embed_base(titulo: str, descricao: str, cor: discord.Color) -> discord.Embed
 #============================================================
 
 class ApostadoView(View):
-def init(self, modo: str, valor: str, premio: str, guild: discord.Guild):
-super().init(timeout=None)
-self.modo = modo
-self.valor = valor
-self.premio = premio
-self.guild = guild
-self.participants: Set[int] = set()          # IDs dos usuários que entraram
-self.user_channels: Dict[int, int] = {}      # user_id → canal de texto criado
-self.user_voice_channels: Dict[int, int] = {}# user_id → canal de voz criado
+    def __init__(self, modo: str, valor: str, premio: str, guild: discord.Guild):
+        super().__init__(timeout=None)
+        self.modo = modo
+        self.valor = valor
+        self.premio = premio
+        self.guild = guild
+        self.participants = set()
+        self.user_channels = {}
+        self.user_voice_channels = {}
 
 # -----------------------------------------------  
 # BOTÃO 🟢 JOGAR  
