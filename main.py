@@ -277,29 +277,39 @@ async def apostado(ctx, modo: str = "X1", valor: str = "R$10", premio: str = "R$
     mensagem = await ctx.send(embed=embed, view=view)
     active_views[(ctx.guild.id, mensagem.id)] = view
 
-#----------------------------------------------------------
-
-#COMANDO !pagamento
-
-#----------------------------------------------------------
+# ----------------------------------------------------------
+# COMANDO !pagamento
+# ----------------------------------------------------------
 
 @bot.command(name="pagamento")
 @commands.has_permissions(administrator=True)
 async def pagamento(ctx):
-"""Envia o embed com QR Code e instruções de pagamento."""
-if not config["qr_code"]:
-embed = embed_base("❌ QR Code não configurado", "Use !setqr <url> para definir a imagem do QR Code.", discord.Color.red())
-return await ctx.send(embed=embed)
+    """Envia o embed com QR Code e instruções de pagamento."""
 
-embed = discord.Embed(  
-    title="💰 PAGAMENTO",  
-    description="Escaneie o QR Code abaixo para realizar o pagamento.",  
-    color=discord.Color.gold()  
-)  
-embed.set_image(url=config["qr_code"])  
-embed.add_field(name="📌 Instruções", value="Após o pagamento, envie o comprovante para um administrador.", inline=False)  
-embed.set_footer(text="Obrigado por jogar conosco!")  
-await ctx.send(embed=embed)
+    if not config["qr_code"]:
+        embed = embed_base(
+            "❌ QR Code não configurado",
+            "Use !setqr <url> para definir a imagem do QR Code.",
+            discord.Color.red()
+        )
+        return await ctx.send(embed=embed)
+
+    embed = discord.Embed(
+        title="💰 PAGAMENTO",
+        description="Escaneie o QR Code abaixo para realizar o pagamento.",
+        color=discord.Color.gold()
+    )
+
+    embed.set_image(url=config["qr_code"])
+    embed.add_field(
+        name="📌 Instruções",
+        value="Após o pagamento, envie o comprovante para um administrador.",
+        inline=False
+    )
+
+    embed.set_footer(text="Obrigado por jogar conosco!")
+
+    await ctx.send(embed=embed)
 
 # ----------------------------------------------------------
 # COMANDO !pagamento
