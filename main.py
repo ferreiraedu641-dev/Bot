@@ -53,16 +53,15 @@ spam_tracker: Dict[tuple, List[str]] = {}
 
 #============================================================
 
-async def enviar_log(guild: discord.Guild, mensagem: str,
-                     cor: discord.Color = discord.Color.blue()):
-"""Envia uma embed de log no canal configurado."""
-canal_id = config["canal_logs"]
-if canal_id:
-canal = guild.get_channel(int(canal_id))
-if canal:
-embed = discord.Embed(description=mensagem, color=cor)
-embed.set_footer(text="Sistema de Logs")
-await canal.send(embed=embed)
+async def enviar_log(guild: discord.Guild, mensagem: str, cor: discord.Color = discord.Color.blue()):
+    """Envia uma embed de log no canal configurado."""
+    canal_id = config["canal_logs"]
+    if canal_id:
+        canal = guild.get_channel(int(canal_id))
+        if canal:
+            embed = discord.Embed(description=mensagem, color=cor)
+            embed.set_footer(text="Sistema de Logs")
+            await canal.send(embed=embed)
 
 def embed_base(titulo: str, descricao: str, cor: discord.Color) -> discord.Embed:
 """Cria um embed padronizado."""
