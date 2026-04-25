@@ -43,7 +43,7 @@ ESTRUTURAS PARA CONTROLE DE PARTIDAS E ANTI-SPAM
 
 active_views: Dict[tuple, 'ApostadoView'] = {}
 
-Anti-spam: (guild_id, user_id, channel_id) → últimas mensagens (lista de conteúdos)
+#Anti-spam: (guild_id, user_id, channel_id) → últimas mensagens (lista de conteúdos)
 
 spam_tracker: Dict[tuple, List[str]] = {}
 
