@@ -322,7 +322,7 @@ async def setlogo(ctx, url: str):
     await ctx.send(embed=embed_base("✅ Logo atualizada", f"Thumbnail definida: {url}", discord.Color.green()))
 
 
-@bot.command(name="setbanner")
+@bot.command(name="banner")
 @commands.has_permissions(administrator=True)
 async def setbanner(ctx, url: str):
     config["banner"] = url
