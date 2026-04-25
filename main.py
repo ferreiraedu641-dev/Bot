@@ -64,10 +64,10 @@ async def enviar_log(guild: discord.Guild, mensagem: str, cor: discord.Color = d
             await canal.send(embed=embed)
 
 def embed_base(titulo: str, descricao: str, cor: discord.Color) -> discord.Embed:
-"""Cria um embed padronizado."""
-embed = discord.Embed(title=titulo, description=descricao, color=cor)
-embed.set_footer(text="Org Apostado • Sistema Profissional")
-return embed
+    """Cria um embed padronizado."""
+    embed = discord.Embed(title=titulo, description=descricao, color=cor)
+    embed.set_footer(text="Org Apostado • Sistema Profissional")
+    return embed
 
 #============================================================
 
