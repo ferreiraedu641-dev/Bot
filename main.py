@@ -419,21 +419,21 @@ async def setbanner(ctx, url: str):
     await ctx.send(embed=embed_base("✅ Banner atualizado", f"Imagem principal definida: {url}", discord.Color.green()))
 
 
-@bot.command(name="setcanal")
+@bot.command(name="canal")
 @commands.has_permissions(administrator=True)
 async def setcanal(ctx, canal: discord.TextChannel):
     config["canal_apostado"] = str(canal.id)
     await ctx.send(embed=embed_base("✅ Canal definido", f"Comando !apostado liberado apenas em {canal.mention}", discord.Color.green()))
 
 
-@bot.command(name="setcategoria")
+@bot.command(name="categoria")
 @commands.has_permissions(administrator=True)
 async def setcategoria(ctx, *, nome: str):
     config["categoria_salas"] = nome
     await ctx.send(embed=embed_base("✅ Categoria definida", f"As salas serão criadas na categoria {nome}", discord.Color.green()))
 
 
-@bot.command(name="setlogs")
+@bot.command(name="logs")
 @commands.has_permissions(administrator=True)
 async def setlogs(ctx, canal: discord.TextChannel):
     config["canal_logs"] = str(canal.id)
