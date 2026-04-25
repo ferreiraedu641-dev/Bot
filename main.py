@@ -231,38 +231,51 @@ async def info(self, interaction: discord.Interaction, button: Button):
 #COMANDO !apostado
 
 #----------------------------------------------------------
-
 @bot.command(name="apostado")
 @commands.has_permissions(administrator=True)
 async def apostado(ctx, modo: str = "X1", valor: str = "R$10", premio: str = "R$100"):
-"""
-Envia o embed principal da partida com botões interativos.
-Uso: !apostado [modo] [valor] [prêmio]
-"""
-# Verifica canal específico
-if config["canal_apostado"] and str(ctx.channel.id) != config["canal_apostado"]:
-embed = embed_base("❌ Canal incorreto", f"Use este comando em <#{config['canal_apostado']}>", discord.Color.red())
-return await ctx.send(embed=embed, delete_after=5)
+    """
+    Envia o embed principal da partida com botões interativos.
+    Uso: !apostado [modo] [valor] [prêmio]
+    """
 
-embed = discord.Embed(  
-    title="🔥 APOSTADO DISPONÍVEL",  
-    description=f"**Modo:** {modo}\n**Valor de entrada:** {valor}\n**Status:** Aguardando jogadores",  
-    color=0xFFD700  
-)  
-# Campo de prêmio em destaque  
-embed.add_field(name="🏆 PRÊMIO", value=f"✨🪙 **{premio}** 🪙✨", inline=False)  
+    # Verifica canal específico
+    if config["canal_apostado"] and str(ctx.channel.id) != config["canal_apostado"]:
+        embed = embed_base(
+            "❌ Canal incorreto",
+            f"Use este comando em <#{config['canal_apostado']}>",
+            discord.Color.red()
+        )
+        return await ctx.send(embed=embed, delete_after=5)
 
-# Thumbnail e banner configuráveis  
-if config["logo"]:  
-    embed.set_thumbnail(url=config["logo"])  
-if config["banner"]:  
-    embed.set_image(url=config["banner"])  
+    embed = discord.Embed(
+        title="🔥 APOSTADO DISPONÍVEL",
+        description=f"**Modo:** {modo}\n**Valor de entrada:** {valor}\n**Status:** Aguardando jogadores",
+        color=0xFFD700
+    )
 
-embed.set_footer(text=f"{ctx.guild.name} • Sistema de Apostados", icon_url=ctx.guild.icon.url if ctx.guild.icon else None)  
+    # Campo de prêmio em destaque
+    embed.add_field(
+        name="🏆 PRÊMIO",
+        value=f"✨🪙 **{premio}** 🪙✨",
+        inline=False
+    )
 
-view = ApostadoView(modo, valor, premio, ctx.guild)  
-mensagem = await ctx.send(embed=embed, view=view)  
-active_views[(ctx.guild.id, mensagem.id)] = view
+    # Thumbnail e banner configuráveis
+    if config["logo"]:
+        embed.set_thumbnail(url=config["logo"])
+
+    if config["banner"]:
+        embed.set_image(url=config["banner"])
+
+    embed.set_footer(
+        text=f"{ctx.guild.name} • Sistema de Apostados",
+        icon_url=ctx.guild.icon.url if ctx.guild.icon else None
+    )
+
+    view = ApostadoView(modo, valor, premio, ctx.guild)
+    mensagem = await ctx.send(embed=embed, view=view)
+    active_views[(ctx.guild.id, mensagem.id)] = view
 
 #----------------------------------------------------------
 
