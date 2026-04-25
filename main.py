@@ -281,7 +281,7 @@ async def apostado(ctx, modo: str = "X1", valor: str = "R$10", premio: str = "R$
 # COMANDO !pagamento
 # ----------------------------------------------------------
 
-@bot.command(name="pagamento")
+@bot.command(name="pix")
 @commands.has_permissions(administrator=True)
 async def pagamento(ctx):
     """Envia o embed com QR Code e instruções de pagamento."""
