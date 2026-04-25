@@ -286,7 +286,7 @@ async def apostado(ctx, modo: str = "X1", valor: str = "R$10", premio: str = "R$
 async def pagamento(ctx):
     """Envia o embed com QR Code e instruções de pagamento."""
 
-    if not config["qr_code"]:
+    if not config.get("qr_code"):
         embed = embed_base(
             "❌ QR Code não configurado",
             "Use !setqr <url> para definir a imagem do QR Code.",
@@ -306,11 +306,9 @@ async def pagamento(ctx):
         value="Após o pagamento, envie o comprovante para um administrador.",
         inline=False
     )
-
     embed.set_footer(text="Obrigado por jogar conosco!")
 
     await ctx.send(embed=embed)
-
 # ----------------------------------------------------------
 # COMANDO !pagamento
 # ----------------------------------------------------------
