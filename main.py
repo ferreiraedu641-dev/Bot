@@ -315,7 +315,7 @@ async def pagamento(ctx):
 # COMANDOS DE CONFIGURAÇÃO
 # ----------------------------------------------------------
 
-@bot.command(name="setlogo")
+@bot.command(name="logo")
 @commands.has_permissions(administrator=True)
 async def setlogo(ctx, url: str):
     config["logo"] = url
