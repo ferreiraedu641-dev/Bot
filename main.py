@@ -5,11 +5,11 @@ from discord.ext import commands
 from discord.ui import View, Button
 from typing import Dict, Optional, Set, List
 
-============================================================
+#============================================================
 
-INTENTS E PREFIXO
+#INTENTS E PREFIXO
 
-============================================================
+#============================================================
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -17,11 +17,11 @@ intents.guilds = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-============================================================
+#============================================================
 
-CONFIGURAÇÕES GLOBAIS (DICIONÁRIO EM MEMÓRIA)
+#CONFIGURAÇÕES GLOBAIS (DICIONÁRIO EM MEMÓRIA)
 
-============================================================
+#============================================================
 
 config: Dict[str, Optional[str]] = {
 "logo": None,         # URL da thumbnail do embed principal
@@ -33,11 +33,11 @@ config: Dict[str, Optional[str]] = {
 "qr_code": None       # URL da imagem do QR Code para pagamento
 }
 
-============================================================
+#============================================================
 
-ESTRUTURAS PARA CONTROLE DE PARTIDAS E ANTI-SPAM
+#ESTRUTURAS PARA CONTROLE DE PARTIDAS E ANTI-SPAM
 
-============================================================
+#============================================================
 
 #Chave: (guild_id, message_id) → View ativa
 
@@ -47,11 +47,11 @@ active_views: Dict[tuple, 'ApostadoView'] = {}
 
 spam_tracker: Dict[tuple, List[str]] = {}
 
-============================================================
+#============================================================
 
-FUNÇÕES AUXILIARES
+#FUNÇÕES AUXILIARES
 
-============================================================
+#============================================================
 
 async def enviar_log(guild: discord.Guild, mensagem: str, cor: discord.Color = discord.Color.blue()):
 """Envia uma embed de log no canal configurado."""
@@ -69,11 +69,11 @@ embed = discord.Embed(title=titulo, description=descricao, color=cor)
 embed.set_footer(text="Org Apostado • Sistema Profissional")
 return embed
 
-============================================================
+#============================================================
 
-VIEW PRINCIPAL DOS APOSTADOS
+#VIEW PRINCIPAL DOS APOSTADOS
 
-============================================================
+#============================================================
 
 class ApostadoView(View):
 def init(self, modo: str, valor: str, premio: str, guild: discord.Guild):
@@ -220,17 +220,17 @@ async def info(self, interaction: discord.Interaction, button: Button):
     embed.set_thumbnail(url=config.get("logo") or None)  
     await interaction.response.send_message(embed=embed, ephemeral=True)
 
-============================================================
+#============================================================
 
-COMANDOS DO BOT
+#COMANDOS DO BOT
 
-============================================================
+#============================================================
 
-----------------------------------------------------------
+#----------------------------------------------------------
 
-COMANDO !apostado
+#COMANDO !apostado
 
-----------------------------------------------------------
+#----------------------------------------------------------
 
 @bot.command(name="apostado")
 @commands.has_permissions(administrator=True)
@@ -264,11 +264,11 @@ view = ApostadoView(modo, valor, premio, ctx.guild)
 mensagem = await ctx.send(embed=embed, view=view)  
 active_views[(ctx.guild.id, mensagem.id)] = view
 
-----------------------------------------------------------
+#----------------------------------------------------------
 
-COMANDO !pagamento
+#COMANDO !pagamento
 
-----------------------------------------------------------
+#----------------------------------------------------------
 
 @bot.command(name="pagamento")
 @commands.has_permissions(administrator=True)
@@ -288,11 +288,11 @@ embed.add_field(name="📌 Instruções", value="Após o pagamento, envie o comp
 embed.set_footer(text="Obrigado por jogar conosco!")  
 await ctx.send(embed=embed)
 
-----------------------------------------------------------
+#----------------------------------------------------------
 
-COMANDOS DE CONFIGURAÇÃO
+#COMANDOS DE CONFIGURAÇÃO
 
-----------------------------------------------------------
+#----------------------------------------------------------
 
 @bot.command(name="setlogo")
 @commands.has_permissions(administrator=True)
@@ -344,11 +344,11 @@ embed.add_field(name="QR Code", value="Configurado" if config["qr_code"] else "N
 embed.add_field(name="Anti-Spam", value=f"<#{config['canal_antispam']}>" if config["canal_antispam"] else "Desativado", inline=True)
 await ctx.send(embed=embed)
 
-----------------------------------------------------------
+#----------------------------------------------------------
 
-COMANDO ANTI-SPAM
+#COMANDO ANTI-SPAM
 
-----------------------------------------------------------
+#----------------------------------------------------------
 
 @bot.command(name="setantispam")
 @commands.has_permissions(administrator=True)
@@ -356,11 +356,11 @@ async def setantispam(ctx, canal: discord.TextChannel):
 config["canal_antispam"] = str(canal.id)
 await ctx.send(embed=embed_base("🛡️ Anti-Spam ativado", f"Mensagens repetidas serão filtradas em {canal.mention}", discord.Color.yellow()))
 
-============================================================
+#============================================================
 
-EVENTO ON_MESSAGE (ANTI-SPAM)
+#EVENTO ON_MESSAGE (ANTI-SPAM)
 
-============================================================
+#============================================================
 
 @bot.event
 async def on_message(message: discord.Message):
@@ -412,22 +412,22 @@ if config["canal_antispam"] and str(message.channel.id) == config["canal_antispa
 # Permitir processamento de comandos  
 await bot.process_commands(message)
 
-============================================================
+#============================================================
 
-EVENTO ON_READY
+#EVENTO ON_READY
 
-============================================================
+#============================================================
 
 @bot.event
 async def on_ready():
 print(f"✅ Bot online como {bot.user}")
 print("Sistema de apostados profissional pronto!")
 
-============================================================
+#============================================================
 
-EXECUÇÃO SEGURA
+#EXECUÇÃO SEGURA
 
-============================================================
+#============================================================
 
 TOKEN = os.getenv("TOKEN")
 if TOKEN is None:
