@@ -367,39 +367,7 @@ async def configurar(ctx):
     embed.add_field(name="Canal Apostado", value=f"<#{config['canal_apostado']}>" if config["canal_apostado"] else "Todos", inline=True)
     embed.add_field(name="Categoria Salas", value=config["categoria_salas"] or "Nenhuma (raiz)", inline=True)
     embed.add_field(name="Canal Logs", value=f"<#{config['canal_logs']}>" if config["canal_logs"] else "Nenhum", inline=True)
-    # ----------------------------------------------------------
-# COMANDO !pagamento
-# ----------------------------------------------------------
-
-@bot.command(name="pagamento")
-@commands.has_permissions(administrator=True)
-async def pagamento(ctx):
-    """Envia o embed com QR Code e instruções de pagamento."""
-
-    if not config["qr_code"]:
-        embed = embed_base(
-            "❌ QR Code não configurado",
-            "Use !setqr <url> para definir a imagem do QR Code.",
-            discord.Color.red()
-        )
-        return await ctx.send(embed=embed)
-
-    embed = discord.Embed(
-        title="💰 PAGAMENTO",
-        description="Escaneie o QR Code abaixo para realizar o pagamento.",
-        color=discord.Color.gold()
-    )
-
-    embed.set_image(url=config["qr_code"])
-    embed.add_field(
-        name="📌 Instruções",
-        value="Após o pagamento, envie o comprovante para um administrador.",
-        inline=False
-    )
-
-    embed.set_footer(text="Obrigado por jogar conosco!")
-    await ctx.send(embed=embed)
-
+    
 
 # ----------------------------------------------------------
 # COMANDOS DE CONFIGURAÇÃO
