@@ -1,4 +1,4 @@
-🤖 Bot de Apostado Discord
+🤖 Bot de Apostado Discord.
 
 🚨NÃO TEM SISTEMA DE PAGAMENTO INCLUSO NO APP .
 
